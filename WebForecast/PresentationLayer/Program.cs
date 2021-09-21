@@ -1,6 +1,6 @@
-﻿using Autofac;
-using BusinessLayer;
-using System;
+﻿using System;
+using Autofac;
+using PresentationLayer.DI;
 using BusinessLayer.Services;
 
 namespace PresentationLayer
@@ -17,7 +17,7 @@ namespace PresentationLayer
 
             var viewer = new WeatherForecastViewer(Container.Resolve<IWeatherService>());
 
-            viewer.ShowWeatherForNow();
+            viewer.Run();
 
             Console.ReadLine();
         }

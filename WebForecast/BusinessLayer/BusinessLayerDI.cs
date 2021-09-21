@@ -1,11 +1,11 @@
 ﻿using Autofac;
-using BusinessLayer.Services;
 using DataLayer;
+using BusinessLayer.Services;
 using Module = Autofac.Module;
 
 namespace BusinessLayer
 {
-    public class BusinessDI : Module
+    public class BusinessLayerDI : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
