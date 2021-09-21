@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using AutoMapper;
 using System.Linq;
 using BusinessLayer.DTO;
 using BusinessLayer.DTO.JSON;
 
-namespace PresentationLayer.Mappings
+namespace BusinessLayer.Mappings
 {
-    public class TestMappingProfile : Profile
+    public class WeatherMappingProfile : Profile
     {
-        public TestMappingProfile()
+        public WeatherMappingProfile()
         {
             CreateMap<WeatherForecastJsonDto, WeatherDto>()
                 .ForMember(dest
@@ -34,9 +33,7 @@ namespace PresentationLayer.Mappings
                     => opt.MapFrom(src => src.list.Length))
                 .ForMember(dest
                     => dest.Weather, opt
-                    => opt.MapFrom<List<WeatherForecastJsonDto>>(src => src.list.ToList()))
-
-                ;
+                    => opt.MapFrom(src => src.list.ToList()));
 
             CreateMap<WeatherJsonDto, WeatherDto>()
                 .ForMember(dest
@@ -57,4 +54,3 @@ namespace PresentationLayer.Mappings
         }
     }
 }
-

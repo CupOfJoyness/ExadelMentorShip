@@ -1,9 +1,9 @@
 ﻿using Autofac;
-using DataLayer;
+using DataLayer.DI;
 using BusinessLayer.Services;
 using Module = Autofac.Module;
 
-namespace BusinessLayer
+namespace BusinessLayer.DI
 {
     public class BusinessLayerDI : Module
     {

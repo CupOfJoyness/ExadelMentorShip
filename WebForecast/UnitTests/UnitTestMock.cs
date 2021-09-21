@@ -1,5 +1,4 @@
 using Moq;
-using BusinessLayer;
 using BusinessLayer.Services;
 using DataLayer.Repositories;
 using System.Threading.Tasks;
@@ -13,13 +12,13 @@ namespace UnitTests
     [TestClass]
     public class UnitTestMock
     {
-        private readonly IWeatherService _weatherService;
         private readonly IMapper _mapper;
+        private readonly IWeatherService _weatherService;
         public UnitTestMock()
         {
             var weatherRepositoryMock = new Mock<IWeatherRepository>();
-            _mapper = PresentationMapperConfiguration.GetMapperCongiguration().CreateMapper();
-            _weatherService = new WeatherService(weatherRepositoryMock.Object, _mapper);
+            _mapper = MappingConfiguration.GetMapperCongiguration().CreateMapper();
+            _weatherService = new WeatherService(_mapper, weatherRepositoryMock.Object);
         }
 
         [TestMethod]
@@ -27,8 +26,9 @@ namespace UnitTests
         {
             var forecastDto = new WeatherForecastDto();
             forecastDto.CityName = string.Empty;
+            forecastDto.DaysCount = 1;
 
-            var actualResult = await _weatherService.GetWeatherForNow(forecastDto);
+            var actualResult = await _weatherService.GetWeatherForecast(forecastDto);
             
             Assert.IsNull(actualResult);
         }

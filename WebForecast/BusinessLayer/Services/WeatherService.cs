@@ -1,13 +1,11 @@
 ﻿using System;
 using AutoMapper;
+using Core.Helpers;
 using Newtonsoft.Json;
+using BusinessLayer.DTO;
 using BusinessLayer.DTO.JSON;
 using DataLayer.Repositories;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using BusinessLayer.DTO;
-using ValidationContext = System.ComponentModel.DataAnnotations.ValidationContext;
 
 namespace BusinessLayer.Services
 {
@@ -15,55 +13,21 @@ namespace BusinessLayer.Services
     {
         private readonly IMapper _mapper;
         private readonly IWeatherRepository _weatherRepository;
-        public WeatherService(IWeatherRepository weatherRepository, IMapper mapper)
+        public WeatherService(IMapper mapper, IWeatherRepository weatherRepository)
         {
-            _weatherRepository = weatherRepository;
-            _mapper = mapper;
-        }
-
-        public async Task<WeatherDto> GetWeatherForNow(WeatherForecastDto forecastDto)
-        {
-            var results = new List<ValidationResult>();
-            var context = new ValidationContext(forecastDto);
-
-            if (!Validator.TryValidateObject(forecastDto, context, results, true))
-            {
-                foreach (var error in results)
-                {
-                    Console.WriteLine(error.ErrorMessage);
-                }
-            }
-
-            if (string.IsNullOrWhiteSpace(forecastDto.CityName))
-            {
-                return null;
-            }
-
-            var answer = await _weatherRepository.GetWeather(forecastDto.CityName);
-            WeatherJsonDto forecastResponseGlobal = JsonConvert.DeserializeObject<WeatherJsonDto>(answer);
-
-            return _mapper.Map<WeatherDto>(forecastResponseGlobal);
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _weatherRepository = weatherRepository ?? throw new ArgumentNullException(nameof(weatherRepository));
         }
 
         public async Task<WeatherForecastDto> GetWeatherForecast(WeatherForecastDto forecastDto)
         {
-            var results = new List<ValidationResult>();
-            var context = new ValidationContext(forecastDto);
-            if (!Validator.TryValidateObject(forecastDto, context, results, true))
-            {
-                foreach (var error in results)
-                {
-                    Console.WriteLine(error.ErrorMessage);
-                }
-            }
+            if (forecastDto.Equals(null)) throw new ArgumentNullException(nameof(forecastDto));
+            if (forecastDto.DaysCount is < 0 or > 16) throw new ArgumentException(nameof(forecastDto.DaysCount));
 
-            if (string.IsNullOrWhiteSpace(forecastDto.CityName))
-            {
-                return null;
-            }
+            ValidationHelper.Validate(forecastDto);
 
             var answer = await _weatherRepository.GetWeatherForecast(forecastDto.CityName, forecastDto.DaysCount);
-            WeatherForecastResponse forecastResponseGlobal = JsonConvert.DeserializeObject<WeatherForecastResponse>(answer);
+            var forecastResponseGlobal = JsonConvert.DeserializeObject<WeatherForecastResponse>(answer);
 
             return _mapper.Map<WeatherForecastDto>(forecastResponseGlobal);
         }

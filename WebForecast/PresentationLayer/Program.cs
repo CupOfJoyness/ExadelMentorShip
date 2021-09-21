@@ -1,7 +1,6 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using PresentationLayer.DI;
-using BusinessLayer.Services;
+using PresentationLayer.Apps;
 
 namespace PresentationLayer
 {
@@ -12,14 +11,15 @@ namespace PresentationLayer
         static void Main(string[] args)
         {
             var builder = new ContainerBuilder();
-            builder.RegisterModule<PresentationLayerDI>();
+            builder.RegisterModule<DIConfiguration>();
             Container = builder.Build();
 
-            var viewer = new WeatherForecastViewer(Container.Resolve<IWeatherService>());
+            var cmdApplication = Container.Resolve<ICmdApplication>();
 
-            viewer.Run();
-
-            Console.ReadLine();
+            while (true)
+            {
+                cmdApplication.Run(args);
+            }
         }
     }
 }

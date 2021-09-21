@@ -1,34 +1,33 @@
-using BusinessLayer;
+using AutoMapper;
+using BusinessLayer.DTO;
 using BusinessLayer.Services;
 using DataLayer.Repositories;
 using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PresentationLayer.DI;
 using PresentationLayer.Mappings;
-using BusinessLayer.DTO;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests
 {
     [TestClass]
     public class UnitTestIntegration
     {
-        private readonly IWeatherService _weatherService;
         private readonly IMapper _mapper;
+        private readonly IWeatherService _weatherService;
         public UnitTestIntegration()
         {
-            IWeatherRepository weatherRepository = new WeatherRepository();
-            _mapper = PresentationMapperConfiguration.GetMapperCongiguration().CreateMapper();
+            var weatherRepository = new WeatherRepository();
+            _mapper = MappingConfiguration.GetMapperCongiguration().CreateMapper();
 
-            _weatherService = new WeatherService(weatherRepository, _mapper);
+            _weatherService = new WeatherService(_mapper, weatherRepository);
         }
         [TestMethod]
         public async Task ForecastReturnNullIfEnterNull()
         {
             var forecastDto = new WeatherForecastDto();
             forecastDto.CityName = string.Empty;
+            forecastDto.DaysCount = 1;
 
-            var actualResult = await _weatherService.GetWeatherForNow(forecastDto);
+            var actualResult = await _weatherService.GetWeatherForecast(forecastDto);
 
             Assert.IsNull(actualResult);
         }
@@ -38,8 +37,9 @@ namespace UnitTests
         {
             var forecastDto = new WeatherForecastDto();
             forecastDto.CityName = "Brest";
+            forecastDto.DaysCount = 1;
 
-            var actualResult = await _weatherService.GetWeatherForNow(forecastDto);
+            var actualResult = await _weatherService.GetWeatherForecast(forecastDto);
 
             Assert.AreEqual(forecastDto.CityName, actualResult.CityName);
         }

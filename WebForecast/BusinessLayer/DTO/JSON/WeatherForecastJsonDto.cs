@@ -2,7 +2,6 @@
 {
     public class WeatherForecastResponse
     {
-        //public string name;
         public City city;
         public WeatherForecastJsonDto[] list;
     }

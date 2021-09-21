@@ -1,18 +1,18 @@
 ﻿using Autofac;
 using AutoMapper;
-using BusinessLayer;
+using BusinessLayer.DI;
 using PresentationLayer.Mappings;
-using System.Collections.Generic;
 
 namespace PresentationLayer.DI
 {
-    public class PresentationLayerDI : Module
+    public class DIConfiguration : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterModule<CmdDI>();
             builder.RegisterModule<BusinessLayerDI>();
 
-            builder.Register(ctx => PresentationMapperConfiguration.GetMapperCongiguration().CreateMapper())
+            builder.Register(ctx => MappingConfiguration.GetMapperCongiguration().CreateMapper())
                 .As<IMapper>()
                 .InstancePerLifetimeScope();
         }

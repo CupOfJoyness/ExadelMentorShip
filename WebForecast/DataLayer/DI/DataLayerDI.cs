@@ -2,7 +2,7 @@
 using DataLayer.Repositories;
 using Module = Autofac.Module;
 
-namespace DataLayer
+namespace DataLayer.DI
 {
     public class DataLayerDI : Module
     {
