@@ -16,9 +16,8 @@ namespace UnitTests
         private readonly IWeatherService _weatherService;
         public UnitTestIntegration()
         {
-            var weatherRepository = new WeatherRepository();
             _mapper = MappingConfiguration.GetMapperCongiguration().CreateMapper();
-
+            var weatherRepository = new WeatherRepository(_mapper);
             _weatherService = new WeatherService(_mapper, weatherRepository);
         }
 
@@ -34,7 +33,7 @@ namespace UnitTests
 
             try
             {
-                await _weatherService.GetWeatherForecast(forecastDto);
+                await _weatherService.GetWeatherForecastAsync(forecastDto);
             }
             catch (ArgumentException e)
             {
@@ -51,7 +50,7 @@ namespace UnitTests
             forecastDto.CityName = "Brest";
             forecastDto.DaysCount = 1;
 
-            var actualResult = await _weatherService.GetWeatherForecast(forecastDto);
+            var actualResult = await _weatherService.GetWeatherForecastAsync(forecastDto);
 
             Assert.AreEqual(forecastDto.CityName, actualResult.CityName);
         }
@@ -68,7 +67,7 @@ namespace UnitTests
             for (int i = 1; i < 16; i++)
             {
                 forecastDto.DaysCount = i;
-                var forecastResult = await _weatherService.GetWeatherForecast(forecastDto);
+                var forecastResult = await _weatherService.GetWeatherForecastAsync(forecastDto);
 
                 if (!forecastResult.Weather.Count.Equals(forecastDto.DaysCount)) 
                     actualResult = false;

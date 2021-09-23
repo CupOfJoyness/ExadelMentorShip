@@ -1,12 +1,9 @@
 using Moq;
 using BusinessLayer.Services;
 using DataLayer.Repositories;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PresentationLayer.Mappings;
 using AutoMapper;
-using BusinessLayer.DTO;
-using System;
 
 namespace UnitTests
 {

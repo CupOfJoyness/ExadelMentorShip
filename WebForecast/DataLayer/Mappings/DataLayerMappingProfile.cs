@@ -1,16 +1,16 @@
 ﻿using System;
-using AutoMapper;
 using System.Linq;
-using BusinessLayer.DTO;
-using BusinessLayer.DTO.JSON;
+using AutoMapper;
+using DataLayer.Models;
+using DataLayer.Models.JSON;
 
-namespace BusinessLayer.Mappings
+namespace DataLayer.Mappings
 {
-    public class WeatherMappingProfile : Profile
+    public class DataLayerMappingProfile : Profile
     {
-        public WeatherMappingProfile()
+        public DataLayerMappingProfile()
         {
-            CreateMap<WeatherForecastJsonDto, WeatherDto>()
+            CreateMap<WeatherForecastList, Weather>()
                 .ForMember(dest
                     => dest.Date, opt
                     => opt.MapFrom(src => new DateTime(1970, 01, 01).AddSeconds(src.dt)))
@@ -24,7 +24,7 @@ namespace BusinessLayer.Mappings
                     => dest.FullDescription, opt
                     => opt.MapFrom(src => src.weather.First().description));
 
-            CreateMap<WeatherForecastResponse, WeatherForecastDto>()
+            CreateMap<WeatherForecastResponse, WeatherForecast>()
                 .ForMember(dest
                     => dest.CityName, opt
                     => opt.MapFrom(src => src.city.name))
@@ -35,13 +35,13 @@ namespace BusinessLayer.Mappings
                     => dest.Weather, opt
                     => opt.MapFrom(src => src.list.ToList()));
 
-            CreateMap<WeatherJsonDto, WeatherDto>()
-                .ForMember(dest
-                    => dest.CityName, opt
-                    => opt.MapFrom(src => src.name))
+            CreateMap<WeatherForNowResponce, Weather>()
                 .ForMember(dest
                     => dest.Date, opt
                     => opt.MapFrom(src => DateTime.Now))
+                .ForMember(dest
+                    => dest.CityName, opt
+                    => opt.MapFrom(src => src.name))
                 .ForMember(dest
                     => dest.DayTemperature, opt
                     => opt.MapFrom(src => src.main.temp))

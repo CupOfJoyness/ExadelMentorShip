@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 namespace PresentationLayer.Commands.Impl
 {
     public abstract class BaseCmdCommand : ICmdCommand
     {
-        public abstract string CommandMessange { get; }
+        public abstract string CommandMessage { get; }
         protected abstract string CommandPattern { get; }
 
         public void Execute(string commandLine)

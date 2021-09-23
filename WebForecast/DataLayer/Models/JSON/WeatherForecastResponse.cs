@@ -1,22 +1,20 @@
-﻿namespace BusinessLayer.DTO.JSON
+﻿namespace DataLayer.Models.JSON
 {
     public class WeatherForecastResponse
     {
         public City city;
-        public WeatherForecastJsonDto[] list;
+        public WeatherForecastList[] list;
     }
 
-    public class City
-    {
-        public string name;
-    }
-
-    public class WeatherForecastJsonDto
+    public class WeatherForecastList
     {
         public long dt;
         public ForecastTemperature temp;
         public WeatherDescription[] weather;
     }
 
-
+    public class City
+    {
+        public string name;
+    }
 }

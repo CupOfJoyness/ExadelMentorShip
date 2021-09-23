@@ -1,43 +1,39 @@
 ﻿using System;
 using BusinessLayer.DTO;
 using BusinessLayer.Services;
-using System.Threading.Tasks;
 using PresentationLayer.Viewers;
 
 namespace PresentationLayer.Commands.Impl
 {
-    public class GetWeaherForNowCmdCommand : BaseCmdCommand
+    public class GetWeatherForNowCmdCommand : BaseCmdCommand
     {
         private readonly IWeatherService _weatherService;
         private readonly IWeatherForecastViewer _weatherForecastViewer;
 
-        public GetWeaherForNowCmdCommand(IWeatherService weatherService, IWeatherForecastViewer weatherForecastViewer)
+        public GetWeatherForNowCmdCommand(IWeatherService weatherService, IWeatherForecastViewer weatherForecastViewer)
         {
             _weatherService = weatherService ?? throw new ArgumentNullException(nameof(weatherService));
             _weatherForecastViewer = weatherForecastViewer ?? throw new ArgumentNullException(nameof(weatherForecastViewer));
         }
 
         protected override string CommandPattern => "1";
-        public override string CommandMessange => "1.Forecast for now.";
+        public override string CommandMessage => "1.Forecast for now.";
 
         protected override void Execute()
         {
-            var forecastDto = new WeatherForecastDto();
+            WeatherForecastDto forecastDto;
 
-        CityNameReading:
             Console.Write("Enter city name:");
-            forecastDto.CityName = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(forecastDto.CityName))
-            {
-                Console.WriteLine("Wrong or empty input! Please, try again.");
-                goto CityNameReading;
-            }
+            var cityName = Console.ReadLine();
 
-            forecastDto.DaysCount = 1;
+            do
+            { 
+                Console.WriteLine("Wrong or empty input! Please, try again.");
+            } while (string.IsNullOrWhiteSpace(cityName));
 
             try
             {
-                forecastDto = _weatherService.GetWeatherForecast(forecastDto).GetAwaiter().GetResult();
+                forecastDto = _weatherService.GetWeatherForNowAsync(cityName).GetAwaiter().GetResult();
             }
             catch (System.Net.WebException)
             {

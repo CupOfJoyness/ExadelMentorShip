@@ -10,8 +10,9 @@ namespace PresentationLayer.DI
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<GetWeaherForNowCmdCommand>().As<ICmdCommand>();
+            builder.RegisterType<GetWeatherForNowCmdCommand>().As<ICmdCommand>();
             builder.RegisterType<GetForecastCmdCommand>().As<ICmdCommand>();
+            builder.RegisterType<GetHottestCityCmdCommand>().As<ICmdCommand>();
             builder.RegisterType<ApplicationExitCmdCommand>().As<ICmdCommand>();
 
             builder.RegisterType<CmdApplication>().As<ICmdApplication>();

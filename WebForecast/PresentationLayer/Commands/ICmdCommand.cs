@@ -1,10 +1,8 @@
-﻿using System.Threading.Tasks;
-
-namespace PresentationLayer.Commands
+﻿namespace PresentationLayer.Commands
 {
     public interface ICmdCommand
     {
-        string CommandMessange { get; }
+        string CommandMessage { get; }
         void Execute(string commandLine);
         bool CanExecute(string commandLine);
     }

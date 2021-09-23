@@ -22,7 +22,7 @@ namespace PresentationLayer.Apps
             {
                 foreach (var command in _commands)
                 {
-                    Console.WriteLine(command.CommandMessange);
+                    Console.WriteLine(command.CommandMessage);
                 }
 
                 Console.Write("> ");

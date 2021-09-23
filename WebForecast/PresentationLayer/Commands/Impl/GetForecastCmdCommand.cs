@@ -1,7 +1,6 @@
 ﻿using System;
 using BusinessLayer.DTO;
 using BusinessLayer.Services;
-using System.Threading.Tasks;
 using PresentationLayer.Viewers;
 
 namespace PresentationLayer.Commands.Impl
@@ -18,7 +17,7 @@ namespace PresentationLayer.Commands.Impl
         }
 
         protected override string CommandPattern => "2";
-        public override string CommandMessange => "2.Forecast for a few days.";
+        public override string CommandMessage => "2.Forecast for a few days.";
 
         protected override void Execute()
         {
@@ -50,7 +49,7 @@ namespace PresentationLayer.Commands.Impl
 
             try
             {
-                forecastDto = _weatherService.GetWeatherForecast(forecastDto).GetAwaiter().GetResult();
+                forecastDto = _weatherService.GetWeatherForecastAsync(forecastDto).GetAwaiter().GetResult();
             }
             catch (System.Net.WebException)
             {

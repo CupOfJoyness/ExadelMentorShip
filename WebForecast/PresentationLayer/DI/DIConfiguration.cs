@@ -13,8 +13,7 @@ namespace PresentationLayer.DI
             builder.RegisterModule<BusinessLayerDI>();
 
             builder.Register(ctx => MappingConfiguration.GetMapperCongiguration().CreateMapper())
-                .As<IMapper>()
-                .InstancePerLifetimeScope();
+                .As<IMapper>().InstancePerLifetimeScope();
         }
     }
 }

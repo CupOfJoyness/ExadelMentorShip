@@ -1,5 +1,12 @@
-﻿namespace BusinessLayer.DTO.JSON
+﻿namespace DataLayer.Models.JSON
 {
+    public class WeatherForNowResponce
+    {
+        public string name;
+        public WeatherDescription[] weather;
+        public WeatherForNow main;
+    }
+
     public class WeatherForNow
     {
         public double temp;

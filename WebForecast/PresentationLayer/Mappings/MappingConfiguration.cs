@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DataLayer.Mappings;
 using BusinessLayer.Mappings;
 using System.Collections.Generic;
 
@@ -10,7 +11,8 @@ namespace PresentationLayer.Mappings
         {
             var mapperProfiles = new List<Profile>
             {
-                new WeatherMappingProfile()
+                new BusinessLayerMappingProfile(),
+                new DataLayerMappingProfile()
             };
             return new MapperConfiguration(mc => mc.AddProfiles(mapperProfiles));
         }

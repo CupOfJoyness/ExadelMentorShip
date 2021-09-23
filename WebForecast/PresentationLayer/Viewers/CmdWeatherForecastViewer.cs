@@ -26,5 +26,14 @@ namespace PresentationLayer.Viewers
                 Console.WriteLine("{0,10}   |{1,15}   |{2,10}", date, forecast.Description, (forecast.DayTemperature + "°C"));
             }
         }
+
+        public void ShowHottestCity(string hottestCity, long timeDelay)
+        {
+            if (string.IsNullOrWhiteSpace(hottestCity)) throw new ArgumentNullException(nameof(hottestCity));
+            if (timeDelay.Equals(null)) throw new ArgumentNullException(nameof(timeDelay));
+
+            Console.WriteLine($"The hottest city is {hottestCity}.");
+            Console.WriteLine($"Request taken {timeDelay} ms.");
+        }
     }
 }

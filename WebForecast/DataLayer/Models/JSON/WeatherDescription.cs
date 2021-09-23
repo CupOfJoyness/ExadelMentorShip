@@ -1,4 +1,4 @@
-﻿namespace BusinessLayer.DTO.JSON
+﻿namespace DataLayer.Models.JSON
 {
     public class WeatherDescription
     {
